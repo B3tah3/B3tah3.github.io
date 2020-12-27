@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Pokemon Types Quiz</title>
+	<script type="text/javascript">
+		
+		const Types = {
+			NORMAL:"Normal", FIRE:"Fire", WATER:"Water", ELECTRIC:"Electric", GRASS:"Grass", ICE:"Ice", 
+			FIGHTING:"Fighting", POISON:"Poison", GROUND:"Ground", FLYING:"Flying", PSYCHIC:"Psychic", BUG:"Bug",
+			ROCK:"Rock", GHOST:"Ghost", DRAGON:"Dragon", DARK:"Dark", STEEL:"Steel", FAIRY:"Fairy"
+			
+		}
+		function getType(t){
+			switch(t){
+			case 0:
+				return Types.NORMAL;
+				break;
+			case 1:
+				return Types.FIRE;
+				break;
+			case 2:
+				return Types.WATER;
+				break;
+			case 3:
+				return Types.ELECTRIC;
+				break;
+			case 4:
+				return Types.GRASS;
+				break;
+			case 5:
+				return Types.ICE;
+				break;
+			case 6:
+				return Types.FIGHTING;
+				break;
+			case 7:
+				return Types.POISON;
+				break;
+			case 8:
+				return Types.GROUND;
+				break;
+			case 9:
+				return Types.FLYING;
+				break;
+			case 10:
+				return Types.PSYCHIC;
+				break;
+			case 11:
+				return Types.BUG;
+				break;
+			case 12:
+				return Types.ROCK;
+				break;
+			case 13:
+				return Types.GHOST;
+				break;
+			case 14:
+				return Types.DRAGON;
+				break;
+			case 15:
+				return Types.DARK;
+				break;
+			case 16:
+				return Types.STEEL;
+				break;
+			case 17:
+				return Types.FAIRY;
+				break;
+			}
+			return "Error generating Random Type";
+		}
+		const VERY = 1.6;
+		const NOT = 0.625;
+		const IN = 0.390265;
+		function isEffectiveAgainst(typeA, typeD){
+			//console.log(typeA + ", " + typeD)
+			switch(typeD){
+			case Types.NORMAL:
+				switch(typeA){
+				case Types.FIGHTING: return VERY;
+				case Types.GHOST: return IN;
+				default: return 1;
+				}
+			case Types.FIRE:
+				switch(typeA){
+				case Types.FIRE: return NOT;
+				case Types.WATER: return VERY;
+				case Types.GRASS: return NOT;
+				case Types.ICE: return NOT;
+				case Types.GROUND: return VERY;
+				case Types.BUG: return NOT;
+				case Types.ROCK: return VERY;
+				case Types.STEEL: return NOT;
+				case Types.FAIRY: return NOT;
+				default: return 1;
+				}
+			case Types.WATER:
+				switch(typeA){
+				case Types.FIRE: return NOT;
+				case Types.WATER: return NOT;
+				case Types.ELECTRIC: return VERY;
+				case Types.GRASS: return VERY;
+				case Types.ICE: return NOT;
+				case Types.STEEL: return NOT;
+				default: return 1;
+				}
+			case Types.ELECTRIC:
+				switch(typeA){
+				case Types.ELECTRIC: return NOT;
+				case Types.GROUND: return VERY;
+				case Types.FLYING: return NOT;
+				case Types.STEEL: return NOT;
+				default: return 1;
+				}
+			case Types.GRASS:
+				switch(typeA){
+				case Types.FIRE: return VERY;
+				case Types.WATER: return NOT;
+				case Types.ELECTRIC: return NOT;
+				case Types.GRASS: return NOT;
+				case Types.ICE: return VERY;
+				case Types.POISON: return VERY;
+				case Types.GROUND: return NOT;
+				case Types.FLYING: return VERY;
+				case Types.BUG: return VERY;
+				case Types.STEEL: return NOT;
+				default: return 1;
+				}
+			case Types.ICE:
+				switch(typeA){
+				case Types.FIRE: return VERY;
+				case Types.ICE: return NOT;
+				case Types.FIGHTING: return VERY;
+				case Types.ROCK: return VERY;
+				case Types.STEEL: return VERY;
+				default: return 1;
+				}
+			case Types.FIGHTING:
+				switch(typeA){
+				case Types.FLYING: return VERY;
+				case Types.PSYCHIC: return VERY;
+				case Types.BUG: return NOT;
+				case Types.ROCK: return NOT;
+				case Types.DARK: return NOT;
+				case Types.FAIRY: return VERY;
+				default: return 1;
+				}
+			case Types.POISON:
+				switch(typeA){
+				case Types.GRASS: return NOT;
+				case Types.FIGHTING: return NOT;
+				case Types.POISON: return NOT;
+				case Types.GROUND: return VERY;
+				case Types.PSYCHIC: return VERY;
+				case Types.BUG: return NOT;
+				case Types.FAIRY: return NOT;
+				default: return 1;
+				}
+			case Types.GROUND:
+				switch(typeA){
+				case Types.WATER: return VERY;
+				case Types.ELECTRIC: return IN;
+				case Types.GRASS: return VERY;
+				case Types.ICE: return VERY;
+				case Types.POISON: return NOT;
+				case Types.ROCK: return NOT;
+				default: return 1;
+				}
+			case Types.FLYING:
+				switch(typeA){
+				case Types.ELECTRIC: return VERY;
+				case Types.GRASS: return NOT;
+				case Types.ICE: return VERY;
+				case Types.FIGHTING: return NOT;
+				case Types.GROUND: return IN;
+				case Types.BUG: return NOT;
+				case Types.ROCK: return VERY;
+				default: return 1;
+				}
+			case Types.PSYCHIC:
+				switch(typeA){
+				case Types.FIGHTING: return NOT;
+				case Types.PSYCHIC: return NOT;
+				case Types.BUG: return VERY;
+				case Types.GHOST: return VERY;
+				case Types.DARK: return VERY;
+				default: return 1;
+				}
+			case Types.BUG:
+				switch(typeA){
+				case Types.FIRE: return VERY;
+				case Types.GRASS: return NOT;
+				case Types.FIGHTING: return NOT;
+				case Types.GROUND: return NOT;
+				case Types.FLYING: return VERY;
+				case Types.ROCK: return VERY;
+				default: return 1;
+				}
+			case Types.ROCK:
+				switch(typeA){
+				case Types.NORMAL: return NOT;
+				case Types.FIRE: return NOT;
+				case Types.WATER: return VERY;
+				case Types.GRASS: return VERY;
+				case Types.FIGHTING: return VERY;
+				case Types.POISON: return NOT;
+				case Types.GROUND: return VERY;
+				case Types.FLYING: return NOT;
+				case Types.STEEL: return VERY;
+				default: return 1;
+				}
+			case Types.GHOST:
+				switch(typeA){
+				case Types.NORMAL: return IN;
+				case Types.FIGHTING: return IN;
+				case Types.POISON: return NOT;
+				case Types.BUG: return NOT;
+				case Types.GHOST: return VERY;
+				case Types.DARK: return VERY;
+				default: return 1;
+				}
+			case Types.DRAGON:
+				switch(typeA){
+				case Types.FIRE: return NOT;
+				case Types.WATER: return NOT;
+				case Types.ELECTRIC: return NOT;
+				case Types.GRASS: return NOT;
+				case Types.ICE: return VERY;
+				case Types.DRAGON: return VERY;
+				case Types.FAIRY: return VERY;
+				default: return 1;
+				}
+			case Types.DARK:
+				switch(typeA){
+				case Types.FIGHTING: return VERY;
+				case Types.PSYCHIC: return IN;
+				case Types.BUG: return VERY;
+				case Types.GHOST: return NOT;
+				case Types.DARK: return NOT;
+				case Types.FAIRY: return VERY;
+				default: return 1;
+				}
+			case Types.STEEL:
+				switch(typeA){
+				case Types.NORMAL: return NOT;
+				case Types.FIRE: return VERY;
+				case Types.GRASS: return NOT;
+				case Types.ICE: return NOT;
+				case Types.FIGHTING: return VERY;
+				case Types.POISON: return NOT;
+				case Types.GROUND: return VERY;
+				case Types.FLYING: return NOT;
+				case Types.PSYCHIC: return NOT;
+				case Types.BUG: return NOT;
+				case Types.ROCK: return NOT;
+				case Types.DRAGON: return NOT;
+				case Types.STEEL: return NOT;
+				case Types.FAIRY: return NOT;
+				default: return 1;
+				}
+			case Types.FAIRY:
+				switch(typeA){
+				case Types.FIGHTING: return NOT;
+				case Types.POISON: return VERY;
+				case Types.BUG: return NOT;
+				case Types.DRAGON: return IN;
+				case Types.DARK: return NOT;
+				case Types.STEEL: return VERY;
+				default: return 1;
+				}
+			}
+			return false;
+		}
+		
+		
+		
+		function typeColor(type){
+			switch(type){
+			case Types.NORMAL:
+				return "aa9";
+				break;
+			case Types.FIRE:
+				return "f42";
+				break;
+			case Types.WATER:
+				return "39f";
+				break;
+			case Types.ELECTRIC:
+				return "fc3";
+				break;
+			case Types.GRASS:
+				return "7c5";
+				break;
+			case Types.ICE:
+				return "6cf";
+				break;
+			case Types.FIGHTING:
+				return "b54";
+				break;
+			case Types.POISON:
+				return "a59";
+				break;
+			case Types.GROUND:
+				return "db5";
+				break;
+			case Types.FLYING:
+				return "89f";
+				break;
+			case Types.PSYCHIC:
+				return "f59";
+				break;
+			case Types.BUG:
+				return "ab2";
+				break;
+			case Types.ROCK:
+				return "ba6";
+				break;
+			case Types.GHOST:
+				return "66b";
+				break;
+			case Types.DRAGON:
+				return "76e";
+				break;
+			case Types.DARK:
+				return "754";
+				break;
+			case Types.STEEL:
+				return "aab";
+				break;
+			case Types.FAIRY:
+				return "e9e";
+				break;
+			}
+			return "00ff00";
+		}
+		
+		function getRandom(){
+			return getType(Math.floor(Math.random()*18));
+		}
+		
+		
+		var typeD;
+		var correctButton;
+		var points = 0;
+		var question;
+		
+		function newQuestion(){
+			
+			correctButton = Math.floor(Math.random()*4)+1;
+			var rightAnswers=[];
+			var wrongAnswers=[];
+
+			question = Math.floor(Math.random()*4);
+			switch(question){
+			case 0:
+				typeD1 = getRandom();
+				typeD2 = getRandom();
+				if(typeD1 == typeD2)
+					document.getElementById("question").innerHTML = "Which Type is effective against " + typeD1+"?";
+				else
+					document.getElementById("question").innerHTML = "Which Type is effective against " + typeD1+" and "+typeD2+"?";
+				
+				for(i = 0; i < 18; i++){
+					if(isEffectiveAgainst(getType(i), typeD1) * isEffectiveAgainst(getType(i), typeD2) > 1){
+						rightAnswers.push(getType(i));
+					}else{
+						wrongAnswers.push(getType(i));
+					}
+				}
+				break;
+			case 1:
+				typeD1 = getRandom();
+				typeD2 = getRandom();
+				if(typeD1 == typeD2)
+					document.getElementById("question").innerHTML = "Which Type is ineffective against " + typeD1+"?";
+				else
+					document.getElementById("question").innerHTML = "Which Type is ineffective against " + typeD1+" and "+typeD2+"?";
+				
+				for(i = 0; i < 18; i++){
+					if(isEffectiveAgainst(getType(i), typeD1) * isEffectiveAgainst(getType(i), typeD2) < 1){
+						rightAnswers.push(getType(i));
+					}else{
+						wrongAnswers.push(getType(i));
+					}
+				}
+				break;
+			case 2:
+				typeA = getRandom();
+				document.getElementById("question").innerHTML = "Which Type defends well against " + typeA + "?";
+				for(i = 0; i < 18; i++){
+					if(isEffectiveAgainst(typeA, getType(i)) < 1){
+						rightAnswers.push(getType(i));
+					}else{
+						wrongAnswers.push(getType(i));
+					}
+				}
+				break;
+			case 3:
+				typeA = getRandom();
+				document.getElementById("question").innerHTML = "Which Type defends badly against " + typeA + "?";
+				for(i = 0; i < 18; i++){
+					if(isEffectiveAgainst(typeA, getType(i)) > 1){
+						rightAnswers.push(getType(i));
+					}else{
+						wrongAnswers.push(getType(i));
+					}
+				}
+				break;
+			}
+			
+			rightAnswer = rightAnswers[Math.floor(Math.random()*rightAnswers.length)];
+
+			setButton(correctButton, rightAnswer);
+			
+			if(1!=correctButton){
+				randomIndex = Math.floor(Math.random()*wrongAnswers.length);
+				setButton(1, wrongAnswers[randomIndex]);
+				wrongAnswers.splice(randomIndex, 1);
+			}
+			if(2!=correctButton){
+				randomIndex = Math.floor(Math.random()*wrongAnswers.length);
+				setButton(2, wrongAnswers[randomIndex]);
+				wrongAnswers.splice(randomIndex, 1);
+			}
+			if(3!=correctButton){
+				randomIndex = Math.floor(Math.random()*wrongAnswers.length);
+				setButton(3, wrongAnswers[randomIndex]);
+				wrongAnswers.splice(randomIndex, 1);
+			}
+			if(4!=correctButton){
+				randomIndex = Math.floor(Math.random()*wrongAnswers.length);
+				setButton(4, wrongAnswers[randomIndex]);
+				wrongAnswers.splice(randomIndex, 1);
+			}
+		}
+		
+		function setButton(id, type){
+			document.getElementById("ans"+id).innerHTML = type;
+			document.getElementById("ans"+id).setAttribute("style", "background-color: #"+typeColor(type)+";");
+		}
+		
+		function buttonPressed(b){
+			
+			if(b == correctButton){
+				points++;
+				console.log("Yeah! Score:" + points);
+				newQuestion();
+			}else{
+				console.log("Try again");
+			}
+		}
+	</script>
+	<style>
+		body {
+		  	margin: 0px;
+			padding: 0px;
+		}
+		
+		.que{
+			background-color: #ffffff;
+			width:100%;
+			height: 20vh;
+			font-size:8vmin;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.but{
+			float: left;
+			width:50%;
+			height: 40vh;
+			margin:0;
+			padding:0;
+		}
+		button{
+			width: 100%;
+			height: 100%;
+			font-size:10vmin;
+		}
+	
+	</style>
+</head>
+<body onload = "newQuestion()">
+	<div id="question" class="que">
+	</div>
+	
+	<div class = "but">
+	<button id = "ans1" onclick = "buttonPressed(1)"> ans1 </button>
+	</div>
+	<div class = "but">
+	<button id = "ans2" onclick = "buttonPressed(2)"> ans2 </button>
+	</div>
+	<div class = "but">
+	<button id = "ans3" onclick = "buttonPressed(3)"> ans3 </button>
+	</div>
+	<div class = "but">
+	<button id = "ans4" onclick = "buttonPressed(4)"> ans4 </button>
+	</div>
+	
+	<script type="text/javascript">
+		//document.getElementById("ans1").innerHTML = "ANS1";
+	</script>
+</body>
+</html>
