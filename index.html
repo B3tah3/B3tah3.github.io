@@ -11,64 +11,13 @@
 			ROCK:"Rock", GHOST:"Ghost", DRAGON:"Dragon", DARK:"Dark", STEEL:"Steel", FAIRY:"Fairy"
 			
 		}
-		function getType(t){
-			switch(t){
-			case 0:
-				return Types.NORMAL;
-				break;
-			case 1:
-				return Types.FIRE;
-				break;
-			case 2:
-				return Types.WATER;
-				break;
-			case 3:
-				return Types.ELECTRIC;
-				break;
-			case 4:
-				return Types.GRASS;
-				break;
-			case 5:
-				return Types.ICE;
-				break;
-			case 6:
-				return Types.FIGHTING;
-				break;
-			case 7:
-				return Types.POISON;
-				break;
-			case 8:
-				return Types.GROUND;
-				break;
-			case 9:
-				return Types.FLYING;
-				break;
-			case 10:
-				return Types.PSYCHIC;
-				break;
-			case 11:
-				return Types.BUG;
-				break;
-			case 12:
-				return Types.ROCK;
-				break;
-			case 13:
-				return Types.GHOST;
-				break;
-			case 14:
-				return Types.DRAGON;
-				break;
-			case 15:
-				return Types.DARK;
-				break;
-			case 16:
-				return Types.STEEL;
-				break;
-			case 17:
-				return Types.FAIRY;
-				break;
+		function getTypeName(t){
+			if(t < 0|| t >= 18){
+				console.log("invalid name at" + question);
 			}
-			return "Error generating Random Type";
+			var names = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", 
+						"Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"]
+			return names[t];
 		}
 		const VERY = 1.6;
 		const NOT = 0.625;
@@ -276,76 +225,24 @@
 		
 		
 		function typeColor(type){
-			switch(type){
-			case Types.NORMAL:
-				return "aa9";
-				break;
-			case Types.FIRE:
-				return "f42";
-				break;
-			case Types.WATER:
-				return "39f";
-				break;
-			case Types.ELECTRIC:
-				return "fc3";
-				break;
-			case Types.GRASS:
-				return "7c5";
-				break;
-			case Types.ICE:
-				return "6cf";
-				break;
-			case Types.FIGHTING:
-				return "b54";
-				break;
-			case Types.POISON:
-				return "a59";
-				break;
-			case Types.GROUND:
-				return "db5";
-				break;
-			case Types.FLYING:
-				return "89f";
-				break;
-			case Types.PSYCHIC:
-				return "f59";
-				break;
-			case Types.BUG:
-				return "ab2";
-				break;
-			case Types.ROCK:
-				return "ba6";
-				break;
-			case Types.GHOST:
-				return "66b";
-				break;
-			case Types.DRAGON:
-				return "76e";
-				break;
-			case Types.DARK:
-				return "754";
-				break;
-			case Types.STEEL:
-				return "aab";
-				break;
-			case Types.FAIRY:
-				return "e9e";
-				break;
-			}
-			return "00ff00";
+
+			var colors = ["9ea0a0", "f2aa5f", "73a9d9", "f2db6f", "76bd73", "97d4cd", "c54f5c", "ac67c9", "cc8c61", 
+							"a0b4e2", "ed8f8b", "a6c44c", "cdc295", "686dbc", "3475b9", "666674", "6698a3", "e59fe1"];
+			return colors[type];
 		}
 		
 		function getRandom(){
-			return getType(Math.floor(Math.random()*18));
+			return getTypeName(Math.floor(Math.random()*18));
 		}
-		
 		
 		var typeD;
 		var correctButton;
 		var points = 0;
+		var highscore = 0;
 		var question;
 		
 		function newQuestion(){
+			
 			
 			correctButton = Math.floor(Math.random()*4)+1;
 			var rightAnswers=[];
@@ -359,13 +256,13 @@
 				if(typeD1 == typeD2)
 					document.getElementById("question").innerHTML = "Which Type is effective against " + typeD1+"?";
 				else
-					document.getElementById("question").innerHTML = "Which Type is effective against " + typeD1+" and "+typeD2+"?";
+					document.getElementById("question").innerHTML = "Which Type is effective against " + typeD1+"-"+typeD2+"?";
 				
 				for(i = 0; i < 18; i++){
-					if(isEffectiveAgainst(getType(i), typeD1) * isEffectiveAgainst(getType(i), typeD2) > 1){
-						rightAnswers.push(getType(i));
+					if(isEffectiveAgainst(getTypeName(i), typeD1) * isEffectiveAgainst(getTypeName(i), typeD2) > 1){
+						rightAnswers.push(i);
 					}else{
-						wrongAnswers.push(getType(i));
+						wrongAnswers.push(i);
 					}
 				}
 				break;
@@ -375,13 +272,13 @@
 				if(typeD1 == typeD2)
 					document.getElementById("question").innerHTML = "Which Type is ineffective against " + typeD1+"?";
 				else
-					document.getElementById("question").innerHTML = "Which Type is ineffective against " + typeD1+" and "+typeD2+"?";
+					document.getElementById("question").innerHTML = "Which Type is ineffective against " + typeD1+"-"+typeD2+"?";
 				
 				for(i = 0; i < 18; i++){
-					if(isEffectiveAgainst(getType(i), typeD1) * isEffectiveAgainst(getType(i), typeD2) < 1){
-						rightAnswers.push(getType(i));
+					if(isEffectiveAgainst(getTypeName(i), typeD1) * isEffectiveAgainst(getTypeName(i), typeD2) < 1){
+						rightAnswers.push(i);
 					}else{
-						wrongAnswers.push(getType(i));
+						wrongAnswers.push(i);
 					}
 				}
 				break;
@@ -389,10 +286,10 @@
 				typeA = getRandom();
 				document.getElementById("question").innerHTML = "Which Type defends well against " + typeA + "?";
 				for(i = 0; i < 18; i++){
-					if(isEffectiveAgainst(typeA, getType(i)) < 1){
-						rightAnswers.push(getType(i));
+					if(isEffectiveAgainst(typeA, getTypeName(i)) < 1){
+						rightAnswers.push(i);
 					}else{
-						wrongAnswers.push(getType(i));
+						wrongAnswers.push(i);
 					}
 				}
 				break;
@@ -400,10 +297,10 @@
 				typeA = getRandom();
 				document.getElementById("question").innerHTML = "Which Type defends badly against " + typeA + "?";
 				for(i = 0; i < 18; i++){
-					if(isEffectiveAgainst(typeA, getType(i)) > 1){
-						rightAnswers.push(getType(i));
+					if(isEffectiveAgainst(typeA, getTypeName(i)) > 1){
+						rightAnswers.push(i);
 					}else{
-						wrongAnswers.push(getType(i));
+						wrongAnswers.push(i);
 					}
 				}
 				break;
@@ -436,7 +333,7 @@
 		}
 		
 		function setButton(id, type){
-			document.getElementById("ans"+id).innerHTML = type;
+			document.getElementById("ans"+id).innerHTML = getTypeName(type);
 			document.getElementById("ans"+id).setAttribute("style", "background-color: #"+typeColor(type)+";");
 		}
 		
@@ -444,28 +341,39 @@
 			
 			if(b == correctButton){
 				points++;
+				if(points > highscore){
+					highscore = points;
+				}
 				console.log("Yeah! Score:" + points);
 				newQuestion();
 			}else{
 				console.log("Try again");
+				points = 0;
 			}
+			document.getElementById("score").innerHTML = points+"/"+highscore;
+			
 		}
 	</script>
 	<style>
 		body {
 		  	margin: 0px;
 			padding: 0px;
-		}
-		
-		.que{
 			background-color: #ffffff;
-			width:100%;
-			height: 20vh;
-			font-size:8vmin;
+			
+			font-size: 8vmin;
 			text-align: center;
 			vertical-align: middle;
 		}
-		.but{
+		
+		#question{
+			background-color: #ffffff;
+			width:100%;
+			height: 10vh;
+			font-size: 4.8vmin;
+			
+			
+		}
+		.buttons{
 			float: left;
 			width:50%;
 			height: 40vh;
@@ -476,29 +384,40 @@
 			width: 100%;
 			height: 100%;
 			font-size:10vmin;
+			color: white;
+		    text-shadow: 2px 2px 2px #000000;
 		}
-	
+		#score{
+		float: left;
+		}
+		#version{
+		float: right;
+		}
 	</style>
 </head>
 <body onload = "newQuestion()">
-	<div id="question" class="que">
+	<div id="question" class = "headline">
 	</div>
 	
-	<div class = "but">
+	<div class = "buttons">
 	<button id = "ans1" onclick = "buttonPressed(1)"> ans1 </button>
 	</div>
-	<div class = "but">
+	<div class = "buttons">
 	<button id = "ans2" onclick = "buttonPressed(2)"> ans2 </button>
 	</div>
-	<div class = "but">
+	<div class = "buttons">
 	<button id = "ans3" onclick = "buttonPressed(3)"> ans3 </button>
 	</div>
-	<div class = "but">
+	<div class = "buttons">
 	<button id = "ans4" onclick = "buttonPressed(4)"> ans4 </button>
 	</div>
-	
-	<script type="text/javascript">
-		//document.getElementById("ans1").innerHTML = "ANS1";
-	</script>
+	<div class = "footline">
+	<div id = "score">
+	0/0
+	</div>
+	<div id = "version">
+	V2
+	</div>
+	</div>
 </body>
 </html>
